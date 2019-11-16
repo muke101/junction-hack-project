@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ListItemContainer = styled.div`
-  background-color: violet;
+  background-color: silver;
   margin: 5px;
   &:hover {
-  background-color: yellow;
+    background-color: darkgray;
   }
 `;
 
