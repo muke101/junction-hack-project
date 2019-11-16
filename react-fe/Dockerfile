@@ -5,5 +5,5 @@ RUN ls
 RUN yarn && yarn build
 
 FROM nginx:alpine
-COPY build /usr/share/nginx/html
+COPY --from=0 build /usr/share/nginx/html
 EXPOSE 80

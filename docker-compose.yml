@@ -1,11 +1,11 @@
 version: '3.4'
 services:
   react-fe:
-    image: junction2019.azurecr.io/ravenholm/react-fe
+    image: ravenholm/react-fe
     build: ./react-fe
     command: [echo, "Run react frontend locally for development!"]
   rpi-api:
-    image: junction2019.azurecr.io/ravenholm/rpi-api
+    image: ravenholm/rpi-api
     build: ./rpi-api
     environment:
     - FLASK_ENV=development
@@ -20,7 +20,7 @@ services:
     depends_on:
     - db
   rpi-client:
-    image: junction2019.azurecr.io/ravenholm/raspberrypi
+    image: ravenholm/raspberrypi
     build: ./pi_data
     ports:
     - 8080:5000
