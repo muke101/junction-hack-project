@@ -36,7 +36,7 @@ test_table = sa.Table(
 
 
 
-data_folder = Path("C:/Users/iita/Documents/")
+data_folder = Path("C:/Users/iita/Documents/junction-hack-project")
 
 file_to_open = data_folder / "myfile.txt"
 
@@ -44,7 +44,7 @@ with open(file_to_open, 'r') as f:
     data = json.load(f)
 
 df = pd.DataFrame(data)
-df.to_sql('business_finland_onesecond', conn)
+df.to_sql('business_finland_fifteenseconds', conn)
 
 #metadata.create_all(engine)
 
