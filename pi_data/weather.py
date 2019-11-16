@@ -20,6 +20,3 @@ class weather:
             chanceOfRain = False
 
         return [humidity, pressure, temperature, chanceOfRain] 
-    
-    def updateDB(self):
-        db.dbPush(self.data, 'weather', self.conn)
