@@ -31,7 +31,7 @@ def main():
     file.truncate(0)
     file.write('{')
     with Pool(59, initializer=init_child, initargs=(lock, file)) as pool:
-        times = list(map(lambda x: ('12:'+ str(x).zfill(2) +':00Z','12:'+ str(x).zfill(2) +':59Z'), range(59)))
+        times = [[(str(y).zfill(2)+':'+str(x).zfill(2)+':00Z',str(y).zfill(2)+':'+str(x+1).zfill(2)+':'+'00Z') for x in range(0,59,5)] for y in range(24)]
         pool.map(query, times)
     file.write('}')
     file.close()
