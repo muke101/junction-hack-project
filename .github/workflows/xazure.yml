@@ -9,18 +9,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-      
+
     - name: Build :latests
       run: docker-compose build
-      
+
     - name: Login to docker hub
       uses: actions-hub/docker/login@master
       env:
-        DOCKER_REGISTRY_URL: ${{ secrets.DOCKER_REGISTRY }}
+        DOCKER_REGISTRY_URL: junction2019.azurecr.io
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Push react-fe
       uses: actions-hub/docker@master
       with:
-        args: push ${{ secrets.DOCKER_REGISTRY }}/ravenholm/react-fe:latest
+        args: push junction2019.azurecr.io/ravenholm/react-fe:latest
