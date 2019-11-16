@@ -6,10 +6,10 @@ def dbConnect(
             db=os.environ['POSTGRES_DB'],
             user=os.environ['POSTGRES_USER'],
             password=os.environ['POSTGRES_PASSWORD'],
-            port=5432
+            port="5432"
             ):
     
-    dbConnectionString = 'postgressql://+'user+':'+password+'@'+host+'/'+db+'/'port
+    dbConnectionString = 'postgressql://'+user+':'+password+'@'+host+'/'+db+'/'+port
     
     engine = create_engine(dbConnectionString)
     
