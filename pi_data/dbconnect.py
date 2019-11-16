@@ -1,5 +1,6 @@
 from sqlalchemy import create_engine
 import os
+import pandas
 
 def dbConnect(
             host=os.environ['POSTGRES_HOST'],
@@ -15,3 +16,6 @@ def dbConnect(
     
     return engine
 
+def dbPush(data, name, conn):
+    df = pd.DataFrame(data)
+    df.to_sql(name, conn)
