@@ -1,0 +1,36 @@
+version: '3.4'
+services:
+  react-fe:
+    image: junction2019.azurecr.io/ravenholm/react-fe
+    build: ./react-fe
+    command: [echo, "Run react frontend locally for development!"]
+  rpi-api:
+    image: junction2019.azurecr.io/ravenholm/rpi-api
+    build: ./rpi-api
+    environment:
+    - FLASK_ENV=development
+    - POSTGRES_HOST
+    - POSTGRES_DB
+    - POSTGRES_USER
+    - POSTGRES_PASSWORD
+    ports:
+    - 5000:5000
+    volumes:
+    - ./rpi-api:/usr/src/app
+    depends_on:
+    - db
+  rpi-client:
+    image: junction2019.azurecr.io/ravenholm/raspberrypi
+    build: ./pi_data
+    ports:
+    - 8080:5000
+  db:
+    image: postgres:alpine
+    ports:
+    - 5431:5432
+    environment:
+    - POSTGRES_DB
+    - POSTGRES_USER
+    - POSTGRES_PASSWORD
+    volumes:
+    - ./db:/docker-entrypoint-initdb.d
