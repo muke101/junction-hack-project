@@ -1,24 +1,19 @@
-import weather as wt
-import traffic as tr
-import popdensity as pd
+import weather.weather as wt
+import traffic.traffic as tr
+import popdensity.popdensity as pd
 
 class calCoeff:
     def __init__(self):
         coeffs = []
 
-    def calWeather(self):
-        subCoeff = 0
-        humidity, pressure, temperature, chanceOfRain = wt.pullData()
-        if humidity > 90:
-            subCoeff+=1
-        if pressure > 1025:
-            subCoeff+=1
-        if temperature > 25 or temperatue < -10:
-            subCoeff+=1 
-        return subCoeff
+    def calWeather(self, k=0.05):
+        data = wt.pullData()
+        averageTemp = 15
+        subCoeff = abs(averageTemp-data['Air_temperature'])*k+data['Relative_humidity']/data['Pressure']
+        isRaining = True if abs(data['Dew_Point']-data['Air_temperature']) < 1 else False 
+        return subCoeff, isRaining
 
     def calTraffic(self):
-        normalized = 
         return tr.countTraffic
         
             

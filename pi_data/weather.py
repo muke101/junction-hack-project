@@ -9,4 +9,4 @@ class weather:
         
         dbPull = 
 
-        return {'temperature':dbPull['Air temperature'], 'humidity':dbPull['Relative humidity'], 'pressure':dbPull['Pressure'], 'dew point':dbPull['Dew-point']}
+        return dbPull
