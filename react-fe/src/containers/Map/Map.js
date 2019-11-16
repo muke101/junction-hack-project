@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import ReactMapGL, {FlyToInterpolator} from 'react-map-gl';
 
-import {RpiMarker} from './markers/RpiMarker';
+import {RpiMarker} from './markers';
+import {HeatmapLayer} from './layers';
 
 const layers = {
   A: {icon: '☃'},
@@ -67,6 +68,7 @@ export function Map(props) {
         mapStyle={'mapbox://styles/mapbox/streets-v9'}
         onViewportChange={viewport => onViewportChange(viewport)}
       >
+        {state.selectedLayer === 'D' && <HeatmapLayer/>}
         {generateRpiMarkers(props.pois)}
       </ReactMapGL>
       <LayerSelectionContainer>
