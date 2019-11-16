@@ -15,5 +15,5 @@ class traffic:
             ).where(self.bf15.c.serial==serial).group_by(self.bf15.c.serial,self.bf15.c.time)
         dbPull = self.conn.execute(sel).fetchall()
 
-        return {traffic_density:sum(dbPull)} 
+        return {traffic_density:len(dbPull)} 
 
