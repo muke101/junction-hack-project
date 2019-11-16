@@ -1,24 +1,23 @@
-import requests as r
+import requests as req
+#import dbconnect as db
+import pandas
 
-data = r.get("https://micromec.org:32001").json() 
+data = req.get("https://micromec.org:32001").json()['CF:FC:1D:65:2E:98']
 
-#MAC:humidity,temperature,pressure,isRaining,isIcy
-dbFormat = {}
-
-acceptedValues = ['humidity', 'temperature', 'pressure']
-
-for pi in data:
-    values = []
-    for field in data[pi]:
-        if field in acceptedValues:
-            values.append(data[pi][field])
-        dbFormat[pi] = values
-    if data[pi]['humidity'] > 80 and data[pi]['pressure'] < 1022:
-        dbFormat[pi].append(True)
-        if data[pi]['temperature'] < 0:
-            data[pi].append(True)
-        else:
-            data[pi].append(False)
-    else:
-        data[pi].append(False, False)
-
+#def pullData(MAC, url="https://micromec.org", port="32001"):
+#    humidity = data['humidity']
+#    pressure = data['pressure']
+#    temperature = data['temperature']
+#    
+#    #pull in slipping danger api here
+#
+#    if humidity > 80 and pressure < 1022:
+#        chanceOfRain = True
+#    else:
+#        chanceOfRain = False
+#    
+#
+def updateDB():
+    engine = db.dbConnect()
+    
+print(data)
