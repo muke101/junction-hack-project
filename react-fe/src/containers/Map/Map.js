@@ -4,6 +4,7 @@ import ReactMapGL, {FlyToInterpolator} from 'react-map-gl';
 
 import {RpiMarker} from './markers';
 import {HeatmapLayer} from './layers';
+import { AddCommentPopup } from './popups';
 
 const layers = {
   A: {icon: '☃'},
@@ -46,6 +47,7 @@ export function Map(props) {
       zoom: props.zoomLevel
     },
     selectedLayer: Object.keys(layers)[0],
+    addCommentPopupLocation: undefined
   });
 
   const generateRpiMarkers = (markers) => markers.map(marker => (
@@ -67,9 +69,26 @@ export function Map(props) {
         {...{...state.viewport}}
         mapStyle={'mapbox://styles/mapbox/streets-v9'}
         onViewportChange={viewport => onViewportChange(viewport)}
+        onClick={(event) => setState({
+          ...state,
+          addCommentPopupLocation: {
+            latitude : event.lngLat[1],
+            longitude : event.lngLat[0],
+          }
+        })}
       >
         {state.selectedLayer === 'D' && <HeatmapLayer/>}
         {generateRpiMarkers(props.pois)}
+        {state.addCommentPopupLocation &&
+          <AddCommentPopup
+            location={state.addCommentPopupLocation}
+            onSubmit={(formData) => {
+              window.alert(`User just commented "${formData.comment}" to (${state.addCommentPopupLocation.latitude}, ${state.addCommentPopupLocation.longitude}). what should we do?`);
+              setState({...state, addCommentPopupLocation: undefined});
+            }}
+            onClose={() => setState({...state, addCommentPopupLocation: undefined})}
+          />
+        }
       </ReactMapGL>
       <LayerSelectionContainer>
         {Object.keys(layers).map(layerKey => (
