@@ -13,7 +13,7 @@ from urllib.parse import quote_plus
 #import airflow
 #from airflow.models import DAG
 #from airflow.operators.python_operator import PythonOperator
-
+import json
 # connection sqlalchemy
 data_folder = Path("C:/Users/iita/Documents/")
 
@@ -34,4 +34,17 @@ test_table = sa.Table(
     sa.Column('column1', sa.Integer)
 )
 
-metadata.create_all(engine)
+
+
+data_folder = Path("C:/Users/iita/Documents/")
+
+file_to_open = data_folder / "myfile.txt"
+
+with open(file_to_open, 'r') as f:
+    data = json.load(f)
+
+df = pd.DataFrame(data)
+df.to_sql('business_finland_onesecond', conn)
+
+#metadata.create_all(engine)
+
