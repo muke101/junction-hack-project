@@ -19,11 +19,6 @@ services:
     - ./rpi-api:/usr/src/app
     depends_on:
     - db
-  rpi-client:
-    image: ravenholm/raspberrypi
-    build: ./pi_data
-    ports:
-    - 8080:5000
   db:
     image: postgres:alpine
     ports:
