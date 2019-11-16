@@ -18,10 +18,11 @@ class calCoeff:
     def calTraffic(self):
         return tr.countTraffic
 
-    def calPopDensity(self):
-        std = 4898
-        mean = 85
-        threshhold = 6000
+    def calPopDensity(self,upperThreshhold=6000,lowerThreshhold=2000):
+        data = pd.pullData()
+        
+        
+        
          
 
 
