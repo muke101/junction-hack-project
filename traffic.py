@@ -30,9 +30,10 @@ def main():
     file = open('gotValues.json', 'a')
     file.truncate(0)
     file.write('{')
-    with Pool(59, initializer=init_child, initargs=(lock, file)) as pool:
+    with Pool(1, initializer=init_child, initargs=(lock, file)) as pool:
         times = [[(str(y).zfill(2)+':'+str(x).zfill(2)+':00Z',str(y).zfill(2)+':'+str(x+1).zfill(2)+':'+'00Z') for x in range(0,59,5)] for y in range(24)]
-        pool.map(query, times)
+        for time in times:
+            pool.map(query, time)
     file.write('}')
     file.close()
 
