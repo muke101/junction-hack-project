@@ -1,0 +1,58 @@
+{
+  "CF:FC:1D:65:2E:98": {
+    "data_format": 3,
+    "humidity": 31.0,
+    "temperature": 21.13,
+    "pressure": 1024.84,
+    "acceleration": 928.1729364725089,
+    "acceleration_x": -698,
+    "acceleration_y": 549,
+    "acceleration_z": -270,
+    "battery": 2995,
+    "ts": 1573821319.286023
+  },
+  "C3:2C:69:6E:24:92": {
+    "data_format": 4,
+    "temperature": 21.0,
+    "humidity": 28.0,
+    "pressure": 1023.0,
+    "identifier": "t",
+    "ts": 1573854345.764999
+  },
+  "D3:D1:CA:D2:A2:CE": {
+    "data_format": 3,
+    "humidity": 21.5,
+    "temperature": 24.01,
+    "pressure": 1021.76,
+    "acceleration": 1064.1639911216691,
+    "acceleration_x": -5,
+    "acceleration_y": 18,
+    "acceleration_z": 1064,
+    "battery": 3007,
+    "ts": 1573854345.6486676
+  },
+  "F5:BD:73:CE:08:A0": {
+    "data_format": 3,
+    "humidity": 25.0,
+    "temperature": -4.92,
+    "pressure": 1023.98,
+    "acceleration": 977.7842297766927,
+    "acceleration_x": -57,
+    "acceleration_y": 78,
+    "acceleration_z": 973,
+    "battery": 3007,
+    "ts": 1573854345.848879
+  },
+  "F4:7B:88:90:C5:0A": {
+    "data_format": 3,
+    "humidity": 26.0,
+    "temperature": 21.69,
+    "pressure": 1021.82,
+    "acceleration": 1005.7976933757603,
+    "acceleration_x": -43,
+    "acceleration_y": -42,
+    "acceleration_z": 1004,
+    "battery": 3019,
+    "ts": 1573854345.1430614
+  }
+}
