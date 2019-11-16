@@ -1,22 +1,17 @@
-#function to pull data that gets called periodically
-#counts total number of detections over peroid
-#directly proportional to sub-coeff
-#could possibly calculate density as well using ranges given rather than direct numbers
-#at certain threshholds can send alerts like 'possible event happening here'
-from sqlalchemy import create_engine
-import os
+import dbconnect as db
+import sqlalchemy as sa
 
-host = os.environ['POSTGRES_HOST']
-db = os.environ['POSTGRES_DB']
-user = os.environ['POSTGRES_USER']
-password = os.environ['POSTGRES_PASSWORD']
-port = 5432
-dbConnectionString = 'postgressql://+'user+':'+password+'@'+host+'/'+db+'/'port
+class traffic:
+    def __init__(self, beaconSerial):
+        self.engine, self.bf15 = db.dbConnect(name='business_finland_fifteenseconds')
+        self.conn = self.engine.connect()
 
-engine = create_engine(dbConnectionString)
+    def countTraffic(self, interval, serial):
+        sel = sa.select(
+            [self.bf15.c.serial,
+            self.bf15.c.time,
+            sa.func.count(self.bf15.c.hash).label('n_devices_found')]
+            ).where(self.bf15.c.serial==serial).group_by(self.bf15.c.serial,self.bf15.c.time)
+        dbPull = self.conn.execute(sel).fetchall()
 
-#SQL query goes here
-
-totalNumber = 20
-
-
+        return {traffic_density:sum(dbPull)}

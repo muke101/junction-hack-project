@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+import sqlalchemy as sa
 import os
 import pandas
 
@@ -7,15 +7,27 @@ def dbConnect(
             db=os.environ['POSTGRES_DB'],
             user=os.environ['POSTGRES_USER'],
             password=os.environ['POSTGRES_PASSWORD'],
-            port="5432"
+            port="5432", name=None
             ):
     
     dbConnectionString = 'postgressql://'+user+':'+password+'@'+host+'/'+db+'/'+port
     
-    engine = create_engine(dbConnectionString)
+    engine = sa.create_engine(dbConnectionString)
+
+    if name == None:
+        return engine
+
+    metadata = sa.MetaData(engine)
+    bf15 = sa.Table(
+        name,
+        metadata,
+        autoload=True
+        autoload_with=engine
+        )
     
-    return engine
+    return engine, bf15
 
 def dbPush(data, name, conn):
     df = pd.DataFrame(data)
     df.to_sql(name, conn)
+
