@@ -1,23 +1,25 @@
 import requests as req
-#import dbconnect as db
-import pandas
+import dbconnect as db
 
-data = req.get("https://micromec.org:32001").json()['CF:FC:1D:65:2E:98']
+class weather:
+    def __init__(self, MAC, url="https://micromec.org", port="32001"):
+        self.conn = db.dbConnect().connect()
+        self.data = req.get(url+':'+port).json()[MAC]
 
-#def pullData(MAC, url="https://micromec.org", port="32001"):
-#    humidity = data['humidity']
-#    pressure = data['pressure']
-#    temperature = data['temperature']
-#    
-#    #pull in slipping danger api here
-#
-#    if humidity > 80 and pressure < 1022:
-#        chanceOfRain = True
-#    else:
-#        chanceOfRain = False
-#    
-#
-def updateDB():
-    engine = db.dbConnect()
+    def pullData(self): 
+        humidity = self.data['humidity']
+        pressure = self.data['pressure']
+        temperature = self.data['temperature']
+        
+        #pull in slipping danger api here
+        #maybe include dew point calc
     
-print(data)
+        if humidity > 80 and pressure < 1022:
+            chanceOfRain = True
+        else:
+            chanceOfRain = False
+
+        return [humidity, pressure, temperature, chanceOfRain] 
+    
+    def updateDB(self):
+        db.dbPush(self.data, 'weather', self.conn)

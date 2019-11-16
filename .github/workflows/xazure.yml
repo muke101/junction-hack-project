@@ -24,3 +24,8 @@ jobs:
       uses: actions-hub/docker@master
       with:
         args: push junction2019.azurecr.io/ravenholm/react-fe:latest
+
+    - name: Push backend
+      uses: actions-hub/docker@master
+      with:
+        args: push junction2019.azurecr.io/ravenholm/backend:latest

@@ -105,3 +105,6 @@ dist
 
 # JetBrains project files
 .idea
+
+# Python venv
+.venv
