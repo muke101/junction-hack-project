@@ -41,7 +41,8 @@ export function Map(props) {
       width : '100%',
       height : '100%',
       latitude : 60.185323,
-      longitude : 24.825576
+      longitude : 24.825576,
+      zoom: props.zoomLevel
     },
     selectedLayer: Object.keys(layers)[0],
   });
@@ -62,7 +63,7 @@ export function Map(props) {
   return (
     <MapContainer>
       <ReactMapGL
-        {...{...state.viewport, zoom: props.zoomLevel}}
+        {...{...state.viewport}}
         mapStyle={'mapbox://styles/mapbox/streets-v9'}
         onViewportChange={viewport => onViewportChange(viewport)}
       >
