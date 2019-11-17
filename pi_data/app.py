@@ -1,16 +1,22 @@
 from flask import Flask
+from flask import request
 from flask_restplus import Resource, Api
-from swagger import initSwagger
+import calculateCoeff as ccoeff
 
 app = Flask(__name__)
 api = Api(app)
-initSwagger(app)
 
 
-@api.route('/hello')
-class HelloWorld(Resource):
+@api.route('/data', methods=['GET'])
+class displayData(Reasource):
     def get(self):
-        return {'hello':'world'}
+        return ccoeff.calCoeff()
+
+@api.route('/input', methods=['POST'])
+class inputData(Reasource):
+    def post(self):
+        data = request.form
+        
 
 if __name__ == '__main__':
     app.run(debug=True)
