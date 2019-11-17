@@ -36,9 +36,10 @@ class calCoeff:
     def calTraffic(self):
         return tr.countTraffic
 
-    def calPopDensity(self,upperThreshhold=6000,lowerThreshhold=2000, data):
-        
-        popdense['population density'] = data
+    def calPopDensity(self,data)
+        upperThreshhold=6000
+        lowerThreshhold=2000
+        popdense['population density'] = data['population density']
 
         if data > upperThreshhold:
             distruption = 'Bad'
