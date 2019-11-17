@@ -1,6 +1,7 @@
 import requests
 from multiprocessing import Pool, Lock
 import pandas as pd
+import json
 
 def query(time_interval):
     url = "https://api.hypr.cl/raw/"
@@ -12,30 +13,17 @@ def query(time_interval):
      'Content-Length': "0", 'Connection': "keep-alive",
      'cache-control': "no-cache" }
     response = requests.request("POST", url, headers=headers)
-    #responsedata = pd.DataFrame(response.text)
-    #print(response.text)
-    with lock:
-        file.write('"' + time_interval[0] + '":' + response.text + ',')
-        print('Processed: ' + str(time_interval))
-
-
-def init_child(lock_, file_):
-    global lock
-    lock = lock_
-    global file
-    file = file_
+    file = open('trafficData/traffic_'+ time_interval[0].replace(':', '') +'.json', 'w')
+    jsonData = json.loads(response.text)
+    file.write(json.dumps(jsonData["raw"]))
+    file.close()
+    print('Processed: ' + str(time_interval))
 
 def main():
-    lock = Lock()
-    file = open('gotValues.json', 'a')
-    file.truncate(0)
-    file.write('{')
-    with Pool(1, initializer=init_child, initargs=(lock, file)) as pool:
+    with Pool(20) as pool:
         times = [[(str(y).zfill(2)+':'+str(x).zfill(2)+':00Z',str(y).zfill(2)+':'+str(x+1).zfill(2)+':'+'00Z') for x in range(0,59,5)] for y in range(24)]
         for time in times:
             pool.map(query, time)
-    file.write('}')
-    file.close()
 
 if __name__ == "__main__":
     main()

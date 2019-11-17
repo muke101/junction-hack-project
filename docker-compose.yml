@@ -45,3 +45,7 @@ services:
     - POSTGRES_PASSWORD
     volumes:
     - ./db:/docker-entrypoint-initdb.d
+  data-scripts:
+    build: ./data-scripts
+    volumes:
+    - ./data-scripts:/usr/src/app
