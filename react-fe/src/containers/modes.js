@@ -43,6 +43,7 @@ function MapView(props){
   return (
   <LayerHolder>
     <MapLayer
+      showComments={props.showComments}
       palette={props.palette}
       pois={props.pois}
       highlightedPois={[state.pointedOnList]}
@@ -81,7 +82,7 @@ function ResidentMode(props) {
 
 function ManagerMode(props) {
   return (
-    <MapView {...props}>
+    <MapView {...props} showComments={true}>
       <WeekSlider past={6} future={4} nowRounded={false} palette={props.palette} />
       {props.children}
     </MapView>

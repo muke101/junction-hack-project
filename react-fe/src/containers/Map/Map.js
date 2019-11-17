@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import ReactMapGL from 'react-map-gl';
 import axios from 'axios';
 
-import {RpiMarker, JobMarker} from './markers';
+import {RpiMarker, JobMarker, CommentMarker} from './markers';
 import {HeatmapLayer} from './layers';
 import { AddCommentPopup } from './popups';
 
@@ -79,12 +79,23 @@ export function Map(props) {
       })
   }
 
+  if (!state.data.comments) {
+    axios.get('/api/v1/backend/reports')
+      .then(function (response) {
+        setState({...state, data: {...state.data, comments: response.data}});
+      })
+  }
+
   const generateRpiMarkers = (markers) => markers.map(marker => (
     <RpiMarker key={marker.id} {...marker} highlighted={props.highlightedPois.includes(marker.id)}/>
   ));
 
   const generateJobMarkers = (markers) => markers.map(marker => (
     <JobMarker key={marker.id} {...marker} highlighted={props.highlightedPois.includes(marker.id)}/>
+  ));
+
+  const generateCommentMarkers = (markers) => markers.map(marker => (
+    <CommentMarker key={marker.id} {...marker} highlighted={props.highlightedPois.includes(marker.id)}/>
   ));
 
   const onViewportChange = (viewport) => {
@@ -112,17 +123,20 @@ export function Map(props) {
         {state.selectedLayer === 'bluetooth' && state.data.bluetooth && <HeatmapLayer data={state.data.bluetooth}/>}
         {generateRpiMarkers(props.pois)}
         {state.data.jobs && generateJobMarkers(state.data.jobs || [])}
+        {props.showComments && state.data.comments && generateCommentMarkers(state.data.comments || [])}
         {state.addCommentPopupLocation &&
           <AddCommentPopup
             location={state.addCommentPopupLocation}
             onSubmit={(formData) => {
-              axios.post('/api/v1/backend/reports', {
+              const report = {
                 user: '57c7f752a8f44af9b7cd3b111cb1837f',
                 comment: formData.comment,
                 priority: 3, // 0 through 5
                 latitude: state.addCommentPopupLocation.latitude,
                 longitude: state.addCommentPopupLocation.longitude,
-              }).then((res) => {
+              };
+              setState({...state, data: {...state.data, comments: [...state.data.comments, report]}})
+              axios.post('/api/v1/backend/reports', report).then((res) => {
                 setState({...state, addCommentPopupLocation: undefined});
               }).catch((err) => {
                 alert('Oh no! Something went boom... :(\n' + err);
