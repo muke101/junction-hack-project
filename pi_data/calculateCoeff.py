@@ -3,7 +3,8 @@ class calCoeff:
         if data is not None:
             return {'weather':self.calWeather(data),'traffic':self.calTraffic(data),'population density':self.calPopDensity(data)}
 
-    def calWeather(self, k=0.05, data):
+    def calWeather(self, data):
+        k = 0.05
         averageTemp = 15
         temp = data['Air_temperature']
         humidity = data['Relative_humidity']
