@@ -21,7 +21,7 @@ def dbConnect(
     bf15 = sa.Table(
         name,
         metadata,
-        autoload=True
+        autoload=True,
         autoload_with=engine
         )
     

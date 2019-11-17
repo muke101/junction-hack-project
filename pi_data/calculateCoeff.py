@@ -15,7 +15,7 @@ class calCoeff:
         tempDifference = abs(averageTemp-temp)
         subCoeff = 0
 
-        weather = {'temperature':temp,'humidity':humidity,'pressure',pressure, 'rainChance':False}
+        weather = {'temperature':temp,'humidity':humidity,'pressure':pressure, 'rainChance':False}
 
         if tempDifference > 20:
            subCoeff+=1
