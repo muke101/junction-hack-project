@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 from db import db, dbConnectionString
 from flask_restplus import Resource, Api
 
@@ -40,6 +40,26 @@ class WeatherController(Resource):
 class BluetoothController(Resource):
     def get(self):
         return toGeoJson(Bluetooth.query.all())
+
+@api.route('/reports')
+class CommentController(Resource):
+    def post(self):
+        extracted = {key: request.json[key] for key in (
+            'longitude', 'latitude', 'comment', #'user', 'priority'
+        )}
+        comment = Comment(**extracted)
+
+        # Do something with priority & user uuid fields?
+        # Fuck migrations, want sleep.
+
+        db.session.add(comment)
+        db.session.commit()
+
+        return jsonify(comment)
+
+    def get(self):
+        return toDictList(Comment.query.all())
+
 
 if __name__ == '__main__':
     app.run(host = '0.0.0.0', debug=True)

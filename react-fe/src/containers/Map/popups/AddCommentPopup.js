@@ -12,7 +12,7 @@ const PopupForm = styled.form`
 
 const Title = styled.div`
   
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   padding: 0 0.4rem;
 `;
 const CommentInput = styled.textarea`

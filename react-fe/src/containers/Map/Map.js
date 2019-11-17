@@ -22,10 +22,10 @@ const MapContainer = styled.div`
   height: 100vh;
   
   .mapboxgl-popup-content {
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255,255,255,0.6);
   }
   .mapboxgl-popup-tip {
-    border-bottom-color: rgba(255,255,255,0.5);
+    border-bottom-color: rgba(255,255,255,0.6);
   }
 `;
 
@@ -104,8 +104,17 @@ export function Map(props) {
           <AddCommentPopup
             location={state.addCommentPopupLocation}
             onSubmit={(formData) => {
-              window.alert(`User just commented "${formData.comment}" to (${state.addCommentPopupLocation.latitude}, ${state.addCommentPopupLocation.longitude}). what should we do?`);
-              setState({...state, addCommentPopupLocation: undefined});
+              axios.post('/api/v1/backend/reports', {
+                user: '57c7f752a8f44af9b7cd3b111cb1837f',
+                comment: formData.comment,
+                priority: 3, // 0 through 5
+                latitude: state.addCommentPopupLocation.latitude,
+                longitude: state.addCommentPopupLocation.longitude,
+              }).then((res) => {
+                setState({...state, addCommentPopupLocation: undefined});
+              }).catch((err) => {
+                alert('Oh no! Something went boom... :(\n' + err);
+              })
             }}
             onClose={() => setState({...state, addCommentPopupLocation: undefined})}
           />

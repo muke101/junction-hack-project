@@ -8,3 +8,7 @@ class Comment(Base):
     comment = db.Column(db.String(160))
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
+
+    #user = db.Column(db.String(32))
+    #priority = db.Column(db.Integer)
+

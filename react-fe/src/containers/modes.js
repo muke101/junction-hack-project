@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Map from './Map';
 import { DaySlider, WeekSlider } from '../overlays/TimeSlider';
 import { List, RpiListItem } from './List';
+import axios from "axios";
 
 const OverlayLayer = styled.div`
   top: 0;
@@ -61,6 +62,12 @@ function MapView(props){
   </LayerHolder>
   );
 };
+
+/*
+axios.get('/api/v1/backend/reports').then((res) => {
+
+});
+*/
 
 function ResidentMode(props) {
   return (
