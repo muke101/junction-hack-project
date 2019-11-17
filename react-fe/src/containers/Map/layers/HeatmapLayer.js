@@ -43,7 +43,6 @@ const heatmapLayer = {
 
 export function HeatmapLayer(props) {
   const {data} = props;
-  console.log("DATA", data)
   if (!data) {
     return null;
   }

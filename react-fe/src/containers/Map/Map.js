@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import ReactMapGL from 'react-map-gl';
 import axios from 'axios';
 
-import {RpiMarker} from './markers';
+import {RpiMarker, JobMarker} from './markers';
 import {HeatmapLayer} from './layers';
 import { AddCommentPopup } from './popups';
 
@@ -72,10 +72,20 @@ export function Map(props) {
       })
   }
 
+  if (!state.data.jobs) {
+    axios.get('/api/v1/backend/jobs')
+      .then(function (response) {
+        setState({...state, data: {...state.data, jobs: response.data}});
+      })
+  }
+
   const generateRpiMarkers = (markers) => markers.map(marker => (
     <RpiMarker key={marker.id} {...marker} highlighted={props.highlightedPois.includes(marker.id)}/>
   ));
 
+  const generateJobMarkers = (markers) => markers.map(marker => (
+    <JobMarker key={marker.id} {...marker} highlighted={props.highlightedPois.includes(marker.id)}/>
+  ));
 
   const onViewportChange = (viewport) => {
     setState({...state, viewport})
@@ -85,7 +95,6 @@ export function Map(props) {
     setState({...state, selectedLayer})
   };
 
-  console.log(state.data.bluetooth);
   return (
     <MapContainer>
       <ReactMapGL
@@ -102,6 +111,7 @@ export function Map(props) {
       >
         {state.selectedLayer === 'bluetooth' && state.data.bluetooth && <HeatmapLayer data={state.data.bluetooth}/>}
         {generateRpiMarkers(props.pois)}
+        {state.data.jobs && generateJobMarkers(state.data.jobs || [])}
         {state.addCommentPopupLocation &&
           <AddCommentPopup
             location={state.addCommentPopupLocation}
