@@ -2,9 +2,19 @@ import React from "react";
 import Slider, { Range } from 'rc-slider';
 import styled from 'styled-components';
 
+import 'rc-slider/assets/index.css';
+
 import moment from 'moment';
 
-export const TimeSlider = styled(function(props) {
+const SliderWrapper = styled.div`
+  position: absolute;
+  width: 90vw;
+  margin-left: 5vw;
+  margin-right: 5vw;
+  bottom: 8rem;
+`;
+
+const TimeSlider = (props) => {
   // Figure out slider parameters and conversion lookup for dates.
   // We map a range of start times to an array of integers, which are then used for the slider.
   // Props:
@@ -41,12 +51,10 @@ export const TimeSlider = styled(function(props) {
     }
   }
 
-  return (<>
-    <Slider min={0} max={options.length} defaultValue={startPos} onChange={props.onChange} />
-  </>);
-})`
-z-index: 50;
-`;
+  return (<SliderWrapper>
+    <Slider className="test" min={0} max={options.length} defaultValue={startPos} onChange={props.onChange} />
+  </SliderWrapper>);
+};
 
 export function DaySlider(props) {
   return (<TimeSlider {...props} unit={'day'} />);

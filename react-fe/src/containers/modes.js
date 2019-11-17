@@ -25,7 +25,7 @@ const LayerHolder = styled.div`
   height: 100vh;
   width: 100vw;
     
-  > * {
+  > div {
     position: absolute;
     z-index: 50;
   }
