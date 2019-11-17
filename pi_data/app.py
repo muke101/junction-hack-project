@@ -8,8 +8,8 @@ api = Api(app)
 
 @api.route('/', methods=['GET','POST'])
 class displayData(Resource):
-    def __init__(self):
-        self.data = None
+    def __init__(self,data):
+        self.data = data
         self.weatherDict = None
         self.trafficDict = None
         self.densityDict = None
