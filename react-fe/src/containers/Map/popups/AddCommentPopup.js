@@ -4,7 +4,8 @@ import {Popup} from 'react-map-gl';
 
 const PopupForm = styled.form`
   background-color: silver;
-  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
 `;
 const CommentInput = styled.textarea`
 `;
@@ -26,6 +27,7 @@ export function AddCommentPopup(props) {
         event.stopPropagation();
         onSubmit({comment: event.target.comment.value});
       }}>
+        Report something!
         <CommentInput name={'comment'} placeholder={'Your message'}/>
         <SubmitButton type={'submit'}>Submit</SubmitButton>
       </PopupForm>
