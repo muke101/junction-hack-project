@@ -15,20 +15,9 @@ from urllib.parse import quote_plus
 #from airflow.operators.python_operator import PythonOperator
 import json
 # connection sqlalchemy
-data_folder = Path("C:/Users/iita/Documents/")
 
 
-file_to_open = Path("C:/Users/iita/Documents/junction-hack-project/traffic") / "gotValues.json"
-with open(file_to_open, 'rb') as f:
-    print(f.read(1000))
-    f.seek(-1000, 2)
-    print()
-    print(f.read(1000))
-
-import os
-os.exit(1)
-
-
+data_folder = Path("./")
 
 file_to_open = data_folder / "conn.txt"
 
@@ -47,17 +36,15 @@ metadata = sa.MetaData(engine)
 #    sa.Column('column1', sa.Integer)
 #)
 
+data_folder = Path("./trafficData")
+for x in os.listdir(data_folder)[1:]:
+    file_to_open = data_folder / x
+    with open(file_to_open, 'r') as f:
+        data = json.load(f)
 
+    df = pd.DataFrame(data)
+    df.to_sql('business_finland_massive', conn, if_exists='append')
 
-data_folder = Path("C:/Users/iita/Documents/junction-hack-project/traffic")
-
-file_to_open = data_folder / "gotValues.json"
-
-with open(file_to_open, 'r') as f:
-    data = json.load(f)
-
-df = pd.DataFrame(data)
-df.to_sql('business_finland_massive', conn)
 #metadata.create_all(engine)
 
 #with open(file_to_open, 'r') as f:
