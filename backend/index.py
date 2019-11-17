@@ -5,6 +5,7 @@ from flask_restplus import Resource, Api
 from models.comment import Comment
 from models.weather import Weather
 from models.bluetooth import Bluetooth
+from models.job import Jobs
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = dbConnectionString
@@ -40,6 +41,11 @@ class WeatherController(Resource):
 class BluetoothController(Resource):
     def get(self):
         return toGeoJson(Bluetooth.query.all())
+
+@api.route('/jobs')
+class JobsController(Resource):
+    def get(self):
+        return toGeoJson(Job.query.all())
 
 @api.route('/reports')
 class CommentController(Resource):
