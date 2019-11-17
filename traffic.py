@@ -15,7 +15,7 @@ def query(time_interval):
     #responsedata = pd.DataFrame(response.text)
     #print(response.text)
     with lock:
-        file.write('"' + time_interval[0] + '":' + response.text + ',')
+        file.write('"' + time_interval[0] + '":' + response.json()['raw'] + ',')
         print('Processed: ' + str(time_interval))
 
 

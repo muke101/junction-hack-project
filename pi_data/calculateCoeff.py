@@ -1,13 +1,9 @@
-import weather.weather as wt
-import traffic.traffic as tr
-import popdensity.popdensity as pd
-
 class calCoeff:
-    def __init__(self):
-        return {'weather':self.calWeather(),'traffic':self.calTraffic(),'population density':self.calPopDensity()}
+    def calc(self, data):
+        if data is not None:
+            return {'weather':self.calWeather(data),'traffic':self.calTraffic(data),'population density':self.calPopDensity(data)}
 
-    def calWeather(self, k=0.05):
-        data = wt.pullData()
+    def calWeather(self, k=0.05, data):
         averageTemp = 15
         temp = data['Air_temperature']
         humidity = data['Relative_humidity']
@@ -28,20 +24,18 @@ class calCoeff:
             weather['rainChance'] = True
 
         if subCoeff == -1:
-            weather['distruption'] = 'Good'
+            weather['weatherDist'] = 'Good'
         if subCoeff == 0:
-            weather['distruption'] = 'Normal'
+            weather['weatherDist'] = 'Normal'
         if subCoeff > 0:
-            weather['distruption'] = 'Bad'
+            weather['weatherDist'] = 'Bad'
     
         return weather
 
     def calTraffic(self):
         return tr.countTraffic
 
-    def calPopDensity(self,upperThreshhold=6000,lowerThreshhold=2000):
-        data = pd.pullData()
-
+    def calPopDensity(self,upperThreshhold=6000,lowerThreshhold=2000, data):
         
         popdense['population density'] = data
 
@@ -52,6 +46,7 @@ class calCoeff:
         else:
             distruption = 'Normal'
 
-        popdense['distruption'] = distruption
+        popdense['popDist'] = distruption
 
         return popdense
+
