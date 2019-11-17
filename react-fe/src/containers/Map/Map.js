@@ -20,6 +20,13 @@ const MapContainer = styled.div`
   position: absolute;
   width: 100vw;
   height: 100vh;
+  
+  .mapboxgl-popup-content {
+    background-color: rgba(255,255,255,0.5);
+  }
+  .mapboxgl-popup-tip {
+    border-bottom-color: rgba(255,255,255,0.5);
+  }
 `;
 
 const LayerSelectionContainer = styled.div`

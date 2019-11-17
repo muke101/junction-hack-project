@@ -24,7 +24,7 @@ const MenuButton = styled.div`
   text-align: center;
   
   background-color: ${props => props.highlighted ? props.palette.light1 : 'rgba(255,255,255,0);'};
-  color: ${props => props.highlighted ? props.palette.dark1 : '#333'}
+  color: ${props => props.highlighted ? props.palette.dark2 : '#333'}
   border-radius: 5px;
   font-size: 1rem;
   
