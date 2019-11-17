@@ -21,6 +21,7 @@ const MenuButton = styled.div`
 
 export default function Menu(props) {
   const {modes, selectedMode, onModeSelection} = props;
+
   return (
     <MenuContainer backgroundColor={modes[selectedMode].color}>
       {Object.keys(modes).map(modeKey => (

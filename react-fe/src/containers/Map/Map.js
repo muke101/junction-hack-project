@@ -17,7 +17,9 @@ const layers = {
 
 const MapContainer = styled.div`
   grid-area: map;
-  position: relative;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
 `;
 
 const LayerSelectionContainer = styled.div`
