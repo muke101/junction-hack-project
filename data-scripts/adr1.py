@@ -36,10 +36,10 @@ def getAddress(value):
     except:
         return {"latitude": 0, "longitude": 0}
 
-df['latitude'] = df.apply(lambda x: getAddress(x['address_f'].strip()+', Helsinki, Finland'), axis=1)['latitude']
-df['longitude'] = df.apply(lambda x: getAddress(x['address_f'].strip()+', Helsinki, Finland'), axis=1)['longitude']
+df['latitude'] = df.apply(lambda x: getAddress(x['address_f'].strip()+', Helsinki, Finland'), axis=1).latitude
+df['longitude'] = df.apply(lambda x: getAddress(x['address_f'].strip()+', Helsinki, Finland'), axis=1).longitude
 
-print(df.head())
+df.to_sql('stara_locations', conn)
 
 #
 #for index, row in data['Lyhyt teksti']:
