@@ -35,7 +35,7 @@ const heatmapLayer = {
       'rgb(255,201,101)'
     ],
     // Adjust the heatmap radius by zoom level
-    'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 0, 2, MAX_ZOOM_LEVEL, 20],
+    'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 0, 2, MAX_ZOOM_LEVEL/2, 20],
     // Transition from heatmap to circle layer by zoom level
     'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 7, 1, 9, 0]
   }

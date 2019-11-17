@@ -1,14 +1,35 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Popup} from 'react-map-gl';
+import defaultTheme from '../../../themes/defaultTheme';
+
+const c = defaultTheme.colors.c1;
 
 const PopupForm = styled.form`
-  background-color: silver;
-  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Title = styled.div`
+  
+  font-size: 1.3rem;
+  padding: 0 0.4rem;
 `;
 const CommentInput = styled.textarea`
+  font-size: 1rem;
+  color: #333;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  min-width: 250px;
+  border-radius: 5px;
+  padding: 5px;
 `;
 const SubmitButton = styled.button`
+  border-radius: 5px;
+  background-color: ${c.light2};
+  border: none;
+  color: ${c.dark2};
+  padding: 5px 0.5rem;
 `;
 
 export function AddCommentPopup(props) {
@@ -26,7 +47,8 @@ export function AddCommentPopup(props) {
         event.stopPropagation();
         onSubmit({comment: event.target.comment.value});
       }}>
-        <CommentInput name={'comment'} placeholder={'Your message'}/>
+        <Title>Report an issue?</Title>
+        <CommentInput name={'comment'} placeholder={'Please describe the problem.'}/>
         <SubmitButton type={'submit'}>Submit</SubmitButton>
       </PopupForm>
     </Popup>

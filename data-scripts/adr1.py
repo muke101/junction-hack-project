@@ -1,10 +1,10 @@
-import pandas as pd 
+import pandas as pd
 from pathlib import Path
-import sqlalchemy as sa 
-from sqlalchemy import func 
+import sqlalchemy as sa
+from sqlalchemy import func
 from sqlalchemy import create_engine
 from geopy import Nominatim
-data_folder = Path("C:/Users/iita/Documents/junction-hack-project")
+data_folder = Path(".")
 
 file_to_open2 = data_folder / "conn.txt"
 with open(file_to_open2) as f:
@@ -25,10 +25,21 @@ data = data1.fetchall()
 df = pd.DataFrame(data)
 df.columns = ['index', 'address_f']
 geolocator = Nominatim(user_agent="stara.py")
+
+def getAddress(value):
+    print(value)
+    try:
+        result = geolocator.geocode(value)
+        if(result):
+            return result
+        return {"latitude": 0, "longitude": 0}
+    except:
+        return {"latitude": 0, "longitude": 0}
+
+df['latitude'] = df.apply(lambda x: getAddress(x['address_f'].strip()+', Helsinki, Finland'), axis=1)['latitude']
+df['longitude'] = df.apply(lambda x: getAddress(x['address_f'].strip()+', Helsinki, Finland'), axis=1)['longitude']
+
 print(df.head())
-
-df['latitude'] = df.apply(lambda x: geolocator.geocode(x, timeout=15), axis=1)
-
 
 #
 #for index, row in data['Lyhyt teksti']:
