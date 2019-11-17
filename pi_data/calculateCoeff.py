@@ -39,11 +39,13 @@ class calCoeff:
     def calPopDensity(self,data):
         upperThreshhold=6000
         lowerThreshhold=2000
+        popdense = {}
         popdense['population density'] = data['population density']
+        density = popdense['population density']
 
-        if data > upperThreshhold:
+        if int(density) > upperThreshhold:
             distruption = 'Bad'
-        if data < lowerThreshhold:
+        if int(density) < lowerThreshhold:
             distruption = 'Good'
         else:
             distruption = 'Normal'
