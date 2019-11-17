@@ -1,0 +1,1 @@
+postgresql://junction2019%40junction2019postgres:Stara2019@junction2019postgres.postgres.database.azure.com:5432/ravenholm
