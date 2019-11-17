@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import ReactMapGL, {FlyToInterpolator} from 'react-map-gl';
+import ReactMapGL from 'react-map-gl';
+import axios from 'axios';
 
 import {RpiMarker} from './markers';
 import {HeatmapLayer} from './layers';
 import { AddCommentPopup } from './popups';
 
 const layers = {
-  A: {icon: '☃'},
+  bluetooth: {icon: '☃', url: '/api/v1/backend/bluetooth'},
   B: {icon: '⏱'},
   C: {icon: '⌚'},
   D: {icon: '🍕'},
@@ -47,8 +48,15 @@ export function Map(props) {
       zoom: props.zoomLevel
     },
     selectedLayer: Object.keys(layers)[0],
-    addCommentPopupLocation: undefined
+    addCommentPopupLocation: undefined,
+    data: {}
   });
+  if (!state.data.bluetooth) {
+    axios.get(layers.bluetooth.url)
+      .then(function (response) {
+        setState({...state, data: {...state.data, bluetooth: response.data}});
+      })
+  }
 
   const generateRpiMarkers = (markers) => markers.map(marker => (
     <RpiMarker key={marker.id} {...marker} highlighted={props.highlightedPois.includes(marker.id)}/>
@@ -63,6 +71,7 @@ export function Map(props) {
     setState({...state, selectedLayer})
   };
 
+  console.log(state.data.bluetooth);
   return (
     <MapContainer>
       <ReactMapGL
@@ -77,7 +86,7 @@ export function Map(props) {
           }
         })}
       >
-        {state.selectedLayer === 'D' && <HeatmapLayer/>}
+        {state.selectedLayer === 'bluetooth' && state.data.bluetooth && <HeatmapLayer data={state.data.bluetooth}/>}
         {generateRpiMarkers(props.pois)}
         {state.addCommentPopupLocation &&
           <AddCommentPopup

@@ -6,3 +6,7 @@ Flask
 
 # Flask addons
 flask_restplus
+
+# SqlAlchemy
+flask_sqlalchemy
+psycopg2
