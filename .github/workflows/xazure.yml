@@ -29,3 +29,8 @@ jobs:
       uses: actions-hub/docker@master
       with:
         args: push junction2019.azurecr.io/ravenholm/backend:latest
+
+    - name: Push rpi-api
+      uses: actions-hub/docker@master
+      with:
+        args: push junction2019.azurecr.io/ravenholm/rpi-api:latest
