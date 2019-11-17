@@ -6,7 +6,7 @@ import calculateCoeff as ccoeff
 app = Flask(__name__)
 api = Api(app)
 
-
+@api.route('/', methods=['GET','POST'])
 class displayData(Resource):
     def __init__(self):
         self.data = None
@@ -14,15 +14,17 @@ class displayData(Resource):
         self.trafficDict = None
         self.densityDict = None
         self.allDicts = [self.weatherDict, self.trafficDict, self.densityDict]
+        if request.method == "GET":
+            self.get()
+        if request.method == "POST":
+            self.post()
 
-    @api.route('/data', methods=['GET'])
     def get(self):
         if self.data is not None:
             return self.dataDict
         else:
             return 'please post data'
 
-    @api.route('/input', methods=['POST'])
     def post(self):
         self.data = request.form
         for target in data['target']:
