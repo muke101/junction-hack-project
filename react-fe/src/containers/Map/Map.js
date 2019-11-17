@@ -38,8 +38,10 @@ const LayerSelectionContainer = styled.div`
 const LayerSelection = styled.div`
   background-color: ${props => props.highlighted ? props.palette.light1 : 'rgba(255,255,255,0.7)'};
   color: ${props => props.highlighted ? '#000' : '#555'};
-  border-radius: 5px;
   border-radius: 100%;
+  border-width: 3px;
+  border-color: ${props => props.highlighted ? props.palette.dark1 : 'rgba(255,255,255,0.7)'};
+  border-style: solid;
   margin: 10px;
   margin-bottom: 20px;
   width: 40px;

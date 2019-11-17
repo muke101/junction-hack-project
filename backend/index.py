@@ -8,6 +8,7 @@ from models.bluetooth import Bluetooth
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = dbConnectionString
+app.config['PROPAGATE_EXCEPTIONS'] = True
 db.init_app(app)
 
 api = Api(app)
@@ -55,7 +56,7 @@ class CommentController(Resource):
         db.session.add(comment)
         db.session.commit()
 
-        return jsonify(comment)
+        return jsonify(comment.as_dict())
 
     def get(self):
         return toDictList(Comment.query.all())
