@@ -12,6 +12,20 @@ const SliderWrapper = styled.div`
   margin-left: 5vw;
   margin-right: 5vw;
   bottom: 8rem;
+  .rc-slider-handle {
+    background-color: ${props => props.palette.light1};
+    border-color: ${props => props.palette.base};
+    border-width: 4px;
+    width: 30px;
+    height: 30px;
+    margin-top: -13px;
+  }
+  .rc-slider-track {
+    background-color:  ${props => props.palette.dark1};
+  }
+  .rc-slider-rail {
+    background-color:  ${props => props.palette.light1};
+  }
 `;
 
 const TimeSlider = (props) => {
@@ -51,8 +65,9 @@ const TimeSlider = (props) => {
     }
   }
 
-  return (<SliderWrapper>
-    <Slider className="test" min={0} max={options.length} defaultValue={startPos} onChange={props.onChange} />
+  return (<SliderWrapper palette={props.palette}>
+    <Slider className="test" min={0} max={options.length} defaultValue={startPos} onChange={props.onChange}
+    />
   </SliderWrapper>);
 };
 

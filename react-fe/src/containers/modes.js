@@ -64,7 +64,7 @@ function MapView(props){
 function ResidentMode(props) {
   return (
     <MapView {...props}>
-      <DaySlider past={14} future={2} nowRounded={false} />
+      <DaySlider past={14} future={2} nowRounded={false} palette={props.palette} />
       {props.children}
     </MapView>
   );
@@ -73,7 +73,7 @@ function ResidentMode(props) {
 function ManagerMode(props) {
   return (
     <MapView {...props}>
-      <WeekSlider past={6} future={4} nowRounded={false} />
+      <WeekSlider past={6} future={4} nowRounded={false} palette={props.palette} />
       {props.children}
     </MapView>
   );
@@ -82,7 +82,7 @@ function ManagerMode(props) {
 function WorkerMode(props) {
   return (
     <MapView {...props}>
-      <DaySlider past={6} future={7} nowRounded={false} />
+      <DaySlider past={6} future={7} nowRounded={false} palette={props.palette} />
       {props.children}
     </MapView>
   );
@@ -91,7 +91,7 @@ function WorkerMode(props) {
 function CityMode(props) {
   return (
     <MapView {...props}>
-      <DaySlider past={30} future={14} nowRounded={false} />
+      <DaySlider past={30} future={14} nowRounded={false} palette={props.palette} />
       {props.children}
     </MapView>
   );
