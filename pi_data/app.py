@@ -7,7 +7,7 @@ app = Flask(__name__)
 api = Api(app)
 
 
-class displayData(Reasource):
+class displayData(Resource):
     def __init__(self):
         self.data = None
         self.weatherDict = None
