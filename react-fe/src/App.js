@@ -1,29 +1,51 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Menu from './Menu';
-import Map from './containers/Map';
-import { List, RpiListItem } from './containers/List';
+import BottomControls from './overlays/BottomControls';
+import { ResidentMode, WorkerMode, ManagerMode, CityMode } from './containers/modes';
 
 import mockRpis from './mockData/rpis';
 
+import { ThemeProvider } from 'styled-components';
+import defaultTheme from './themes/defaultTheme';
+
+import { fa, faUserNinja, faHardHat, faUserSecret, faCity } from '@fortawesome/free-solid-svg-icons';
+
 const AppContainer = styled.div`
-  background-color: yellow;
+  position: absolute;
   width: 100vw;
   height: 100vh;  
-  display: grid;
-  grid-template-columns: auto 400px;
-  grid-template-rows: 60px auto;
-  grid-template-areas:
-    "menu menu"
-    "map list";
 `;
 
 const modes = {
-  resident: {title: 'Resident', color: 'green', zoomLevel: 16},
-  worker: {title: 'Worker', color: 'yellow', zoomLevel: 15},
-  manager: {title: 'Manager', color: 'blue', zoomLevel: 13},
-  official: {title: 'CityOfficial', color: 'violet', zoomLevel: 11},
+  resident: {
+    title: 'Resident',
+    Interface: ResidentMode,
+    palette: defaultTheme.colors.c1,
+    zoomLevel: 16,
+    icon: faUserNinja,
+  },
+  worker: {
+    title: 'Worker',
+    Interface: WorkerMode,
+    palette: defaultTheme.colors.c3,
+    zoomLevel: 15,
+    icon: faHardHat,
+  },
+  manager: {
+    title: 'Manager',
+    Interface: ManagerMode,
+    palette: defaultTheme.colors.c2,
+    zoomLevel: 13,
+    icon: faUserSecret,
+  },
+  city: {
+    title: 'City Official',
+    Interface: CityMode,
+    palette: defaultTheme.colors.c4,
+    zoomLevel: 11,
+    icon: faCity,
+  }
 };
 
 const mockLocation = {latitude: 60.185323, longitude: 24.825576};
@@ -34,33 +56,26 @@ const pois = Object.keys(mockRpis).map((id, index) => ({
   longitude: mockLocation.longitude + (index / 1000)
 }));
 
+
 export default function App() {
   const [state, setState] = React.useState({
-    pointedOnList: undefined,
     selectedMode: Object.keys(modes)[0],
+    mode: Object.values(modes)[0]
   });
 
   const onModeSelection = (selectedMode) => {
-    setState({...state, selectedMode});
+    setState({...state, selectedMode, mode: modes[selectedMode]});
   };
 
+  const Interface = state.mode.Interface;
+
   return (
-    <AppContainer>
-      <Menu modes={modes} selectedMode={state.selectedMode} onModeSelection={onModeSelection}/>
-      <Map
-        pois={pois}
-        highlightedPois={[state.pointedOnList]}
-        zoomLevel={modes[state.selectedMode].zoomLevel}
-      />
-      <List backgroundColor={modes[state.selectedMode].color}>
-        {pois.map(poi => (
-          <RpiListItem
-            key={poi.id}
-            {...poi}
-            onMouseEnter={() => setState({...state, pointedOnList: poi.id})}
-            onMouseLeave={() => setState({...state, pointedOnList: undefined})}
-          />))}
-      </List>
-    </AppContainer>
+    <ThemeProvider theme={defaultTheme}>
+      <AppContainer>
+        <Interface pois={pois} {...state.mode}>
+          <BottomControls modes={modes} {...state} onModeSelection={onModeSelection} />
+        </Interface>
+      </AppContainer>
+    </ThemeProvider>
   );
 }
