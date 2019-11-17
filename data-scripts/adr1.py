@@ -29,17 +29,19 @@ geolocator = Nominatim(user_agent="stara.py")
 def getAddress(value):
     print(value)
     try:
-        result = geolocator.geocode(value)
-        if(result):
-            return result
-        return {"latitude": 0, "longitude": 0}
+        location = geolocator.geocode(value)
+        if(location):
+            return [location.latitude, location.longitude]
+        return [0, 0]
     except:
-        return {"latitude": 0, "longitude": 0}
+        return [0, 0]
 
-df['latitude'] = df.apply(lambda x: getAddress(x['address_f'].strip()+', Helsinki, Finland'), axis=1).latitude
-df['longitude'] = df.apply(lambda x: getAddress(x['address_f'].strip()+', Helsinki, Finland'), axis=1).longitude
+location = df.apply(lambda x: pd.Series(getAddress(x['address_f'].strip()+', Helsinki, Finland'), index=['latitude', 'longitude']), axis=1)
 
-df.to_sql('stara_locations', conn)
+df = df.merge(location, 'inner', left_index=True, right_index=True)
+print(df.head())
+
+df.to_sql('stara_locations_av', conn)
 
 #
 #for index, row in data['Lyhyt teksti']:
