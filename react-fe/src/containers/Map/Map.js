@@ -32,13 +32,16 @@ const MapContainer = styled.div`
 const LayerSelectionContainer = styled.div`
   position: absolute;
   right: 10px;
-  top: 10px;
+  bottom: 15rem;
 `;
 
 const LayerSelection = styled.div`
-  background-color: ${props => props.highlighted ? 'gold' : 'silver'};
+  background-color: ${props => props.highlighted ? props.palette.light1 : 'rgba(255,255,255,0.7)'};
+  color: ${props => props.highlighted ? '#000' : '#555'};
   border-radius: 5px;
+  border-radius: 100%;
   margin: 10px;
+  margin-bottom: 20px;
   width: 40px;
   height: 40px;
   font-size: 25px;
@@ -111,6 +114,7 @@ export function Map(props) {
       <LayerSelectionContainer>
         {Object.keys(layers).map(layerKey => (
           <LayerSelection
+            palette={props.palette}
             key={layerKey}
             highlighted={state.selectedLayer === layerKey}
             onClick={() => onSelectLayer(layerKey)}

@@ -42,6 +42,7 @@ function MapView(props){
   return (
   <LayerHolder>
     <MapLayer
+      palette={props.palette}
       pois={props.pois}
       highlightedPois={[state.pointedOnList]}
       zoomLevel={props.zoomLevel}
