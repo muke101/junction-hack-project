@@ -49,11 +49,12 @@ function MapView(props){
       zoomLevel={props.zoomLevel}
       style={{zIndex: 1}}
     />
-    <List backgroundColor={props.palette.base}>
+    <List palette={props.palette}>
       {props.pois.map(poi => (
         <RpiListItem
           key={poi.id}
           {...poi}
+          palette={props.palette}
           onMouseEnter={() => setState({...state, pointedOnList: poi.id})}
           onMouseLeave={() => setState({...state, pointedOnList: undefined})}
         />))}
