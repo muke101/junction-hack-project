@@ -65,6 +65,36 @@ function MapView(props){
   );
 };
 
+const TimeWrapper = styled.div`
+  width: 100vw;
+  position: absolute;
+  bottom: 10rem;
+  left: 0;
+  justify-content: center;
+`
+
+const TimeInfo = styled.div`
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-radius: 1rem;
+  background: rgba(255,255,255,0.7);
+  z-index: 100;
+  min-width: 300px;
+  max-width: 80vw;
+  text-align: center;
+  margin-left: 10vw;
+  width: 80vw;
+`
+
+const Title = styled.div`
+  font-size: 1.2rem;
+`
+const SubTitle = styled.div`
+  font-size: 0.8rem;
+  color: #888;
+`
+
+
 /*
 axios.get('/api/v1/backend/reports').then((res) => {
 
@@ -72,36 +102,96 @@ axios.get('/api/v1/backend/reports').then((res) => {
 */
 
 function ResidentMode(props) {
+  const [state, setState] = React.useState({
+    title: "Current time",
+    subTitle: 'Daily information',
+    moment: undefined,
+  });
+
+  function onChange(starting, isNow) {
+    console.log(starting);
+    setState({...state,
+      title: isNow || !starting ? 'Current time' : starting.format('LLL'),
+      moment: isNow ? undefined : starting,
+    });
+  }
+
   return (
     <MapView {...props}>
-      <DaySlider past={14} future={2} nowRounded={false} palette={props.palette} />
+      <TimeWrapper><TimeInfo><Title>{state.title}</Title><SubTitle>{state.subTitle}</SubTitle></TimeInfo></TimeWrapper>
+      <DaySlider past={14} future={2} nowRounded={false} palette={props.palette} onChange={onChange} />
       {props.children}
     </MapView>
   );
 };
 
 function ManagerMode(props) {
+  const [state, setState] = React.useState({
+    title: "Current time",
+    subTitle: 'Weekly information',
+    moment: undefined,
+  });
+
+  function onChange(starting, isNow) {
+    console.log(starting);
+    setState({...state,
+      title: isNow || !starting ? 'Current time' : starting.format('LLL'),
+      moment: isNow ? undefined : starting,
+    });
+  }
+
   return (
     <MapView {...props} showComments={true}>
-      <WeekSlider past={6} future={4} nowRounded={false} palette={props.palette} />
+      <TimeWrapper><TimeInfo><Title>{state.title}</Title><SubTitle>{state.subTitle}</SubTitle></TimeInfo></TimeWrapper>
+      <WeekSlider past={6} future={4} nowRounded={false} palette={props.palette} onChange={onChange} />
       {props.children}
     </MapView>
   );
 };
 
 function WorkerMode(props) {
+  const [state, setState] = React.useState({
+    title: "Current time",
+    subTitle: 'Daily information',
+    moment: undefined,
+  });
+
+  function onChange(starting, isNow) {
+    console.log(starting);
+    setState({...state,
+      title: isNow || !starting ? 'Current time' : starting.format('LLL'),
+      moment: isNow ? undefined : starting,
+    });
+  }
+
   return (
     <MapView {...props}>
-      <DaySlider past={6} future={7} nowRounded={false} palette={props.palette} />
+      <TimeWrapper><TimeInfo><Title>{state.title}</Title><SubTitle>{state.subTitle}</SubTitle></TimeInfo></TimeWrapper>
+      <DaySlider past={6} future={7} nowRounded={false} palette={props.palette} onChange={onChange} />
       {props.children}
     </MapView>
   );
 };
 
 function CityMode(props) {
+  const [state, setState] = React.useState({
+    title: "Current time",
+    subTitle: 'Daily information',
+    moment: undefined,
+  });
+
+  function onChange(starting, isNow) {
+    console.log(starting);
+    setState({...state,
+      title: isNow || !starting ? 'Current time' : starting.format('LLL'),
+      moment: isNow ? undefined : starting,
+    });
+  }
+
   return (
     <MapView {...props}>
-      <DaySlider past={30} future={14} nowRounded={false} palette={props.palette} />
+      <TimeWrapper><TimeInfo><Title>{state.title}</Title><SubTitle>{state.subTitle}</SubTitle></TimeInfo></TimeWrapper>
+      <DaySlider past={30} future={14} nowRounded={false} palette={props.palette} onChange={onChange} />
       {props.children}
     </MapView>
   );

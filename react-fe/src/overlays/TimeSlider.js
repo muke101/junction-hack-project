@@ -46,27 +46,27 @@ const TimeSlider = (props) => {
   if(props.past) {
     startPos += props.past;
     for (let i = props.past; i > 0; --i) {
-      options.push(start.subtract(i, props.unit));
+      options.push(start.subtract(i, props.unit).clone());
     }
   }
 
-  options.push(props.nowRounded ? start : now);
+  options.push(props.nowRounded ? start.clone() : now.clone());
 
   console.log('future', props.future)
   if(props.future) {
     for (let i = 0; i < props.future; ++i) {
-      options.push(end.add(i, props.unit));
+      options.push(end.add(i, props.unit).clone());
     }
   }
 
   function onChange(value) {
     if(props.onChange) {
-      return props.onChange(value, ); // Extra argument tells whether the selection represents "now"
+      return props.onChange(options[value], options[value] === (props.nowRounded ? start : now)); // Extra argument tells whether the selection represents "now"
     }
   }
 
   return (<SliderWrapper palette={props.palette}>
-    <Slider className="test" min={0} max={options.length} defaultValue={startPos} onChange={props.onChange}
+    <Slider className="test" min={0} max={options.length} defaultValue={startPos} onChange={onChange}
     />
   </SliderWrapper>);
 };
